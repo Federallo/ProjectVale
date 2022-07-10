@@ -1,2 +1,2 @@
 # ProjectVale
-first AI neural network
+First project of an AI neural network
