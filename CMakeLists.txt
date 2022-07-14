@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.0)
 project(projectVale)
 
 set(CMAKE_BUILD_TYPE Debug)
-include(CTest)
-enable_testing()
 
 set(CMAKE_CXX_STANDARD 20)
 
