@@ -4,6 +4,7 @@
 #include <eigen3/Eigen/Eigen>
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 class NeuralNetwork{
 public:
@@ -33,6 +34,8 @@ private://for the moment
     std::vector<std::unique_ptr<Eigen::RowVectorXf>> deltas; //stores the error contribution of each neurons
     //TODO what is MatrixXf?
     std::vector<std::unique_ptr<Eigen::MatrixXf>> weights; //connection wights itself
+    //TODO check
+    std::vector<uint> topology;
     float learningRate;
 };
 
