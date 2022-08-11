@@ -1,7 +1,9 @@
 #ifndef _NEURALNETWORK_H
 #define _NEURALNETWORK_H
 
-#include <eigen3/Eigen/Eigen>
+//#include <eigen3/Eigen/Eigen>
+#include <Eigen/Eigen>
+#include <unsupported/Eigen/FFT>
 #include <vector>
 #include <memory>
 #include <algorithm>
