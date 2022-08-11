@@ -56,3 +56,53 @@ void NeuralNetwork::forwardPropagandation(Eigen::RowVectorXf& input)
         neuronLayers[i] -> block(0, 0, 1, topology[i]).unaryExpr(std::ptr_fun(activationFunction));//TODO what is this last part?
     }
 }
+
+void NeuralNetwork::backwardPropagandation(Eigen::RowVectorXf& output)
+{
+    calcError(output);
+    updateWeights();
+}
+
+void NeuralNetwork::calcError(Eigen::RowVectorXf& output)
+{
+    //determine errors made by neurons of last layer
+    (*deltas.back()) = output - (*neuronLayers.back());//deference because they are pointers
+
+    //error calculation of hidden layers
+    //we start from the last hidden layer
+    //and continue till the first hidden layer
+    for (uint i = topology.size() - 2; i > 0; i--)
+    {
+        (*deltas[i]) = (*deltas[i + 1]) * (weights[i] -> transpose());//TODO what is transpose?
+    }
+}
+
+void NeuralNetwork::updateWeights()
+{
+    for (uint i = 0; i < topology.size() - 1; i++)
+    {
+        //iterating over the different layers (from first hidden to output layer)
+        //if layer is the output, there no bias neuron, number of neurons specified = number of cols
+        //if layer is not output, thiere is bias neuron and number of neurons specified = number of cols - 1
+        if (i != topology.size() - 2)
+        {
+            for (uint c = 0; c < weights[i] -> cols() - 1; c++)
+            {
+                for (uint r = 0; r < weights[i] -> rows(); r++)
+                {
+                    weights[i] -> coeffRef(r, c) += learningRate * deltas[i + 1] -> coeffRef(c) * activationFunctionDerivative(cacheLayers[i + 1] -> coeffRef(c) * neuronLayers[i] -> coeffRef(r));
+                }
+            }
+        }
+        else
+        {
+            for (uint c = 0; c < weights[i] -> cols(); c++)
+            {
+                for(uint r = 0; r < weights[i] -> rows(); r++)
+                {
+                    weights[i]->coeffRef(r, c) += learningRate * deltas[i + 1]->coeffRef(c) * activationFunctionDerivative(cacheLayers[i + 1]->coeffRef(c)) * neuronLayers[i]->coeffRef(r);
+                }
+            }
+        }
+    }
+}
