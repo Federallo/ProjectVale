@@ -14,7 +14,9 @@ include_directories(src)
 add_executable(${EXECUTABLE_NAME}
                 src/main.cpp
                 src/NeuralNetwork.h
-                src/NeuralNetwork.cpp)
+                src/NeuralNetwork.cpp
+                src/DataLoader.h
+                src/DataLoader.cpp)
 
 target_link_libraries(${EXECUTABLE_NAME} Eigen3::Eigen)
 

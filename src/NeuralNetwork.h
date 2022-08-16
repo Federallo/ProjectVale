@@ -9,7 +9,8 @@
 #include <algorithm>
 #include <iostream>
 
-class NeuralNetwork{
+class NeuralNetwork
+{
 public:
     //TODO what is uint?
     NeuralNetwork(std::vector<uint> topology, float learningRate = float(0.005));
