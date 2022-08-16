@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
+#include <iostream>
 
 class NeuralNetwork{
 public:
@@ -27,7 +28,7 @@ public:
     void updateWeights();
 
     //to train neural network give an array of data points
-    void train(std::vector<std::unique_ptr<Eigen::RowVectorXf>> data);
+    void train(std::vector<std::unique_ptr<Eigen::RowVectorXf>> input_data, std::vector<std::unique_ptr<Eigen::RowVectorXf>> output_data);
 
 private://for the moment
     //storage objects for working of neural network

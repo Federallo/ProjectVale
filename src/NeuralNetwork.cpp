@@ -1,5 +1,16 @@
 #include "NeuralNetwork.h"
 
+//activation function
+constexpr float activationFunction(float x)
+{
+    return tanhf(x);//TODO what is tanhf?
+}
+
+constexpr float activationFunctionDerivative(float x)
+{
+    return 1 - tanhf(x) * tanhf(x);
+}
+
 NeuralNetwork::NeuralNetwork(std::vector<uint> topology, float learningRate): topology(topology), learningRate(learningRate)
 {
     for(uint i = 0; i < topology.size(); i ++)
@@ -52,8 +63,7 @@ void NeuralNetwork::forwardPropagandation(Eigen::RowVectorXf& input)
     for(uint i = 0; i < topology.size(); i++)
     {
         (*neuronLayers[i]) = (*neuronLayers[i - 1]) * (*weights[i - 1]);
-        //FIXME
-        neuronLayers[i] -> block(0, 0, 1, topology[i]).unaryExpr(std::ptr_fun(activationFunction));//TODO what is this last part?
+        neuronLayers[i] -> block(0, 0, 1, topology[i]).unaryExpr(std::ptr_fun(activationFunction));//TODO what is this last part? 
     }
 }
 
@@ -104,5 +114,18 @@ void NeuralNetwork::updateWeights()
                 }
             }
         }
+    }
+}
+
+void NeuralNetwork::train(std::vector<std::unique_ptr<Eigen::RowVectorXf>> input_data, std::vector<std::unique_ptr<Eigen::RowVectorXf>> output_data)
+{
+    for(uint i = 0; i < input_data.size(); i++)
+    {
+        std::cout << "Input to neural network is: " << *input_data[i] << std::endl;
+        forwardPropagandation(*input_data[i]);
+        std::cout << "Expected output is: " << *output_data[i] << std::endl;
+        std::cout << "Output produced is: " << *neuronLayers.back() << std::endl;
+        backwardPropagandation(*output_data[i]);
+        std::cout << "MSE: " << std::sqrt((*deltas.back()).dot((*deltas.back())) / deltas.back() -> size()) << std::endl; //TODO what is MSE?
     }
 }
