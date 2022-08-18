@@ -117,7 +117,7 @@ void NeuralNetwork::updateWeights()
     }
 }
 
-void NeuralNetwork::train(std::vector<std::unique_ptr<Eigen::RowVectorXf>> input_data, std::vector<std::unique_ptr<Eigen::RowVectorXf>> output_data)
+void NeuralNetwork::train(std::vector<std::unique_ptr<Eigen::RowVectorXf>>& input_data, std::vector<std::unique_ptr<Eigen::RowVectorXf>>& output_data)
 {
     for(uint i = 0; i < input_data.size(); i++)
     {

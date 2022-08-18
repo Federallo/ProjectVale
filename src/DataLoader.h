@@ -11,10 +11,10 @@
 class DataLoader
 {
 public:
-    DataLoader();
+    //DataLoader();
 
     //method to read csv file
-    void readCSV(std::string filename, std::vector<std::unique_ptr<Eigen::VectorXf>>& data);
+    void readCSV(std::string filename, std::vector<std::unique_ptr<Eigen::RowVectorXf>>& data);
 
     //to generate training data
     void generateData(std::string filename);

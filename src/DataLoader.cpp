@@ -1,6 +1,6 @@
 #include "DataLoader.h"
 
-void DataLoader::readCSV(std::string filename, std::vector<std::unique_ptr<Eigen::VectorXf>>& data)
+void DataLoader::readCSV(std::string filename, std::vector<std::unique_ptr<Eigen::RowVectorXf>>& data)
 {
     data.clear();
     std::ifstream file(filename);//TODO what is ifstream
@@ -14,7 +14,7 @@ void DataLoader::readCSV(std::string filename, std::vector<std::unique_ptr<Eigen
         parsed_vec.push_back(float(std::stof(&word[0])));//TODO what is stof
     }
     uint cols = parsed_vec.size();
-    data.push_back(std::make_unique<Eigen::VectorXf>(cols));
+    data.push_back(std::make_unique<Eigen::RowVectorXf>(cols));
     for(uint i = 0; i < cols; i++)
     {
         data.back() -> coeffRef(1, i) = parsed_vec[i];
@@ -26,7 +26,7 @@ void DataLoader::readCSV(std::string filename, std::vector<std::unique_ptr<Eigen
         while(std::getline(file, line, '\n'))
         {
             std::stringstream ss(line);
-            data.push_back(std::make_unique<Eigen::VectorXf>(1, cols));
+            data.push_back(std::make_unique<Eigen::RowVectorXf>(1, cols));
             uint i = 0;
             while(std::getline(ss, word, ','))//FIXME ', '
             {
