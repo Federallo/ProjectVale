@@ -63,7 +63,7 @@ void NeuralNetwork::forwardPropagandation(Eigen::RowVectorXf& input)
     for(uint i = 0; i < topology.size(); i++)
     {
         (*neuronLayers[i]) = (*neuronLayers[i - 1]) * (*weights[i - 1]);
-        neuronLayers[i] -> block(0, 0, 1, topology[i]).unaryExpr(std::ptr_fun(activationFunction));//TODO what is this last part? 
+        neuronLayers[i] -> block(0, 0, 1, topology[i]).unaryExpr(std::function(activationFunction));//TODO what is this last part? 
     }
 }
 
