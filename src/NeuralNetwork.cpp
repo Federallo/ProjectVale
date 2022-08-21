@@ -60,9 +60,9 @@ void NeuralNetwork::forwardPropagandation(Eigen::RowVectorXf& input)
 
     //propagate data forward and apply activation function to network
     //unaryExpr applies the given function to all elements of CURRENT_LAYER
-    for(uint i = 0; i < topology.size(); i++)
+    for(uint i = 1; i < topology.size(); i++)
     {
-        (*neuronLayers[i]) = (*neuronLayers[i - 1]) * (*weights[i - 1]);
+        (*neuronLayers[i].get()) = (*neuronLayers[i - 1].get()) * (*weights[i - 1].get());
         neuronLayers[i] -> block(0, 0, 1, topology[i]).unaryExpr(std::function(activationFunction));//TODO what is this last part? 
     }
 }
@@ -110,7 +110,7 @@ void NeuralNetwork::updateWeights()
             {
                 for(uint r = 0; r < weights[i] -> rows(); r++)
                 {
-                    weights[i]->coeffRef(r, c) += learningRate * deltas[i + 1]->coeffRef(c) * activationFunctionDerivative(cacheLayers[i + 1]->coeffRef(c)) * neuronLayers[i]->coeffRef(r);
+                    weights[i] -> coeffRef(r, c) += learningRate * deltas[i + 1]->coeffRef(c) * activationFunctionDerivative(cacheLayers[i + 1]->coeffRef(c)) * neuronLayers[i]->coeffRef(r);
                 }
             }
         }
@@ -121,11 +121,11 @@ void NeuralNetwork::train(std::vector<std::unique_ptr<Eigen::RowVectorXf>>& inpu
 {
     for(uint i = 0; i < input_data.size(); i++)
     {
-        std::cout << "Input to neural network is: " << *input_data[i] << std::endl;
-        forwardPropagandation(*input_data[i]);
-        std::cout << "Expected output is: " << *output_data[i] << std::endl;
+        std::cout << "Input to neural network is: " << *input_data[i].get() << std::endl;
+        forwardPropagandation(*input_data[i].get());
+        std::cout << "Expected output is: " << *output_data[i].get() << std::endl;
         std::cout << "Output produced is: " << *neuronLayers.back() << std::endl;
-        backwardPropagandation(*output_data[i]);
+        backwardPropagandation(*output_data[i].get());
         std::cout << "MSE: " << std::sqrt((*deltas.back()).dot((*deltas.back())) / deltas.back() -> size()) << std::endl; //TODO what is MSE?
     }
 }
