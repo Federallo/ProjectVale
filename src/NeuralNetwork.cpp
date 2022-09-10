@@ -3,7 +3,7 @@
 //activation function
 constexpr float activationFunction(float x)
 {
-    return tanhf(x);//TODO what is tanhf?
+    return tanhf(x);
 }
 
 constexpr float activationFunctionDerivative(float x)
@@ -39,8 +39,8 @@ NeuralNetwork::NeuralNetwork(std::vector<uint> topology, float learningRate): to
             if(i != topology.size() - 1)
             {
                 weights.push_back(std::unique_ptr<Eigen::MatrixXf>(new Eigen::MatrixXf(topology[i - 1] + 1, topology[i] + 1)));
-                weights.back() -> setRandom();//TODO what is setRandom?
-                weights.back() -> col(topology[i]).setZero();//TODO what is col and setZero
+                weights.back() -> setRandom();
+                weights.back() -> col(topology[i]).setZero();
                 weights.back() -> coeffRef(topology[i - 1], topology[i]) = 1.0f;
             }
             else
@@ -56,14 +56,14 @@ void NeuralNetwork::forwardPropagandation(Eigen::RowVectorXf& input)
 {
     //setting the input to input layer
     //                            (startRow, startCol, blockRows, blocCols)
-    neuronLayers.front() -> block(0, 0, 1, neuronLayers.front() -> size() - 1) = input;//TODO what is block?
+    neuronLayers.front() -> block(0, 0, 1, neuronLayers.front() -> size() - 1) = input;
 
     //propagate data forward and apply activation function to network
     //unaryExpr applies the given function to all elements of CURRENT_LAYER
     for(uint i = 1; i < topology.size(); i++)
     {
         (*neuronLayers[i].get()) = (*neuronLayers[i - 1].get()) * (*weights[i - 1].get());
-        neuronLayers[i] -> block(0, 0, 1, topology[i]).unaryExpr(std::function(activationFunction));//TODO what is this last part? 
+        neuronLayers[i] -> block(0, 0, 1, topology[i]).unaryExpr(std::function(activationFunction)); 
     }
 }
 
@@ -83,7 +83,7 @@ void NeuralNetwork::calcError(Eigen::RowVectorXf& output)
     //and continue till the first hidden layer
     for (uint i = topology.size() - 2; i > 0; i--)
     {
-        (*deltas[i]) = (*deltas[i + 1]) * (weights[i] -> transpose());//TODO what is transpose?
+        (*deltas[i]) = (*deltas[i + 1]) * (weights[i] -> transpose());
     }
 }
 
@@ -126,6 +126,6 @@ void NeuralNetwork::train(std::vector<std::unique_ptr<Eigen::RowVectorXf>>& inpu
         std::cout << "Expected output is: " << *output_data[i].get() << std::endl;
         std::cout << "Output produced is: " << *neuronLayers.back() << std::endl;
         backwardPropagandation(*output_data[i].get());
-        std::cout << "MSE: " << std::sqrt((*deltas.back()).dot((*deltas.back())) / deltas.back() -> size()) << std::endl; //TODO what is MSE?
+        std::cout << "MSE: " << std::sqrt((*deltas.back()).dot((*deltas.back())) / deltas.back() -> size()) << std::endl;
     }
 }

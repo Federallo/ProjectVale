@@ -12,11 +12,9 @@
 class NeuralNetwork
 {
 public:
-    //TODO what is uint?
     NeuralNetwork(std::vector<uint> topology, float learningRate = float(0.005));
 
     //for forward propagandation of data
-    //TODO what is RowVectorXf?
     void forwardPropagandation(Eigen::RowVectorXf& input);
 
     //for backward propagandation of errors made by neurons
@@ -36,9 +34,7 @@ private://for the moment
     std::vector<std::unique_ptr<Eigen::RowVectorXf>> neuronLayers; //stores layers of out network
     std::vector<std::unique_ptr<Eigen::RowVectorXf>> cacheLayers; //stores the unactivated (activation functions not yet applied) values of layers
     std::vector<std::unique_ptr<Eigen::RowVectorXf>> deltas; //stores the error contribution of each neurons
-    //TODO what is MatrixXf?
-    std::vector<std::unique_ptr<Eigen::MatrixXf>> weights; //connection wights itself
-    //TODO check
+    std::vector<std::unique_ptr<Eigen::MatrixXf>> weights; //connection weights itself
     std::vector<uint> topology;
     float learningRate;
 };
