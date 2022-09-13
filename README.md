@@ -6,14 +6,16 @@ First project of an AI neural network made by me.
 A Neural Network is a computational model based on structure and functions of biological neural networks. 
 There are three different layers:
 
--### Input Layer
+- **Input Layer**
  Reads all the inputs which are transferred to hidden layers.
  Communicates with the external enviroment that gives information to the neural network. 
  It represents the condition to train the neural network.
--Hidden Layer
- They can be more than one and they are used for processing inputs received from input layers.
--Output Layer
- Stores the data processed from hidden layers.
+- **Hidden Layer**
+ Is a collection of neurons which has activation function applied on and their scope is to process inputs received from input layers: it extracts the required features from data.
+ They can be more than one.
+- **Output Layer**
+ Collects and transmits the data processed from hidden layers in the way it has been designed. 
+ They can be traced back to input layers.
 
 
 Source used:...
