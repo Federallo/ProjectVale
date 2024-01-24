@@ -1,4 +1,4 @@
-# ProjectVale
+# Machine learning example
 First project of an AI neural network made by me.
 
 ## Introduction to Neural Network
